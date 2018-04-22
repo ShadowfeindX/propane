@@ -56,7 +56,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import java.io.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.text.*;
@@ -2252,7 +2256,7 @@ public class PApplet implements PConstants {
     } catch (InvocationTargetException ite) {
       String msg = ite.getTargetException().getMessage();
       if ((msg != null) &&
-          (msg.indexOf("no jogl in java.library.path") != -1)) {
+          (msg.contains("no jogl in java.library.path"))) {
         // Is this true anymore, since the JARs contain the native libs?
         throw new RuntimeException("The jogl library folder needs to be " +
           "specified with -Djava.library.path=/path/to/jogl");
