@@ -56,11 +56,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.text.*;
@@ -77,34 +73,34 @@ import processing.opengl.*;
 
 /**
  * Base class for all sketches that use processing.core.
- * <p>
+ * <p/>
  * The <A HREF="https://github.com/processing/processing/wiki/Window-Size-and-Full-Screen">
  * Window Size and Full Screen</A> page on the Wiki has useful information
  * about sizing, multiple displays, full screen, etc.
- * <p>
+ * <p/>
  * Processing uses active mode rendering. All animation tasks happen on the
  * "Processing Animation Thread". The setup() and draw() methods are handled
  * by that thread, and events (like mouse movement and key presses, which are
  * fired by the event dispatch thread or EDT) are queued to be safely handled
  * at the end of draw().
- * <p>
+ * <p/>
  * Starting with 3.0a6, blit operations are on the EDT, so as not to cause
  * GUI problems with Swing and AWT. In the case of the default renderer, the
  * sketch renders to an offscreen image, then the EDT is asked to bring that
  * image to the screen.
- * <p>
+ * <p/>
  * For code that needs to run on the EDT, use EventQueue.invokeLater(). When
  * doing so, be careful to synchronize between that code and the Processing
  * animation thread. That is, you can't call Processing methods from the EDT
  * or at any random time from another thread. Use of a callback function or
  * the registerXxx() methods in PApplet can help ensure that your code doesn't
  * do something naughty.
- * <p>
+ * <p/>
  * As of Processing 3.0, we have removed Applet as the base class for PApplet.
  * This means that we can remove lots of legacy code, however one downside is
  * that it's no longer possible (without extra code) to embed a PApplet into
  * another Java application.
- * <p>
+ * <p/>
  * As of Processing 3.0, we have discontinued support for versions of Java
  * prior to 1.8. We don't have enough people to support it, and for a
  * project of our (tiny) size, we should be focusing on the future, rather
@@ -112,16 +108,16 @@ import processing.opengl.*;
  */
 public class PApplet implements PConstants {
   /** Full name of the Java version (i.e. 1.5.0_11). */
-  static public final String JAVA_VERSION_NAME =
+  static public final String javaVersionName =
     System.getProperty("java.version");
 
-  static public final int JAVA_PLATFORM;
+  static public final int javaPlatform;
   static {
-    String version = JAVA_VERSION_NAME;
-    if (JAVA_VERSION_NAME.startsWith("1.")) {
+    String version = javaVersionName;
+    if (javaVersionName.startsWith("1.")) {
       version = version.substring(2);
     }
-    JAVA_PLATFORM = parseInt(version.substring(0, version.indexOf('.')));
+    javaPlatform = Integer.parseInt(version.substring(0, version.indexOf('.')));
   }
 
   /**
@@ -131,7 +127,7 @@ public class PApplet implements PConstants {
    * @deprecated
    */
   @Deprecated
-  public static final float javaVersion = 1 + JAVA_PLATFORM / 10f;
+  public static final float javaVersion = 1 + javaPlatform / 10f;
 
   /**
    * Current platform in use, one of the
@@ -142,10 +138,10 @@ public class PApplet implements PConstants {
   static {
     String osname = System.getProperty("os.name");
 
-    if (osname.contains("Mac")) {
+    if (osname.indexOf("Mac") != -1) {
       platform = MACOSX;
 
-    } else if (osname.contains("Windows")) {
+    } else if (osname.indexOf("Windows") != -1) {
       platform = WINDOWS;
 
     } else if (osname.equals("Linux")) {  // true for the ibm vm
@@ -173,8 +169,7 @@ public class PApplet implements PConstants {
    * example, if the current screen resolution is 1024x768,
    * <b>displayWidth</b> is 1024 and <b>displayHeight</b> is 768. These
    * dimensions are useful when exporting full-screen applications.
-   *
-   *
+   * <br /><br />
    * To ensure that the sketch takes over the entire screen, use "Present"
    * instead of "Run". Otherwise the window will still have a frame border
    * around it and not be placed in the upper corner of the screen. On Mac OS
@@ -1294,7 +1289,7 @@ public class PApplet implements PConstants {
    * Called by the browser or applet viewer to inform this applet that it
    * should start its execution. It is called after the init method and
    * each time the applet is revisited in a Web page.
-   * <p>
+   * <p/>
    * Called explicitly via the first call to PApplet.paint(), because
    * PAppletGL needs to have a usable screen before getting things rolling.
    */
@@ -1310,7 +1305,7 @@ public class PApplet implements PConstants {
   /**
    * Called by the browser or applet viewer to inform
    * this applet that it should stop its execution.
-   * <p>
+   * <p/>
    * Unfortunately, there are no guarantees from the Java spec
    * when or if stop() will be called (i.e. on browser quit,
    * or when moving between web pages), and it's not always called.
@@ -1369,7 +1364,7 @@ public class PApplet implements PConstants {
 //   * Called by the browser or applet viewer to inform this applet
 //   * that it is being reclaimed and that it should destroy
 //   * any resources that it has allocated.
-//   * <p>
+//   * <p/>
 //   * destroy() supposedly gets called as the applet viewer
 //   * is shutting down the applet. stop() is called
 //   * first, and then destroy() to really get rid of things.
@@ -2233,11 +2228,8 @@ public class PApplet implements PConstants {
     }
 
     try {
-      Class<?> rendererClass =
-        Thread.currentThread().getContextClassLoader().loadClass(renderer);
-
-      Constructor<?> constructor = rendererClass.getConstructor(new Class[] { });
-      PGraphics pg = (PGraphics) constructor.newInstance();
+      Class<?> rendererClass = Class.forName(renderer);
+      PGraphics pg = (PGraphics)rendererClass.newInstance();
 
       pg.setParent(this);
       pg.setPrimary(primary);
@@ -2253,27 +2245,7 @@ public class PApplet implements PConstants {
       // everything worked, return it
       return pg;
 
-    } catch (InvocationTargetException ite) {
-      String msg = ite.getTargetException().getMessage();
-      if ((msg != null) &&
-          (msg.contains("no jogl in java.library.path"))) {
-        // Is this true anymore, since the JARs contain the native libs?
-        throw new RuntimeException("The jogl library folder needs to be " +
-          "specified with -Djava.library.path=/path/to/jogl");
-
-      } else {
-        printStackTrace(ite.getTargetException());
-        Throwable target = ite.getTargetException();
-        /*
-        // removing for 3.2, we'll see
-        if (platform == MACOSX) {
-          target.printStackTrace(System.out);  // OS X bug (still true?)
-        }
-        */
-        throw new RuntimeException(target.getMessage());
-      }
-
-    } catch (ClassNotFoundException cnfe) {
+    }catch (ClassNotFoundException cnfe) {
 //      if (cnfe.getMessage().indexOf("processing.opengl.PGraphicsOpenGL") != -1) {
 //        throw new RuntimeException(openglError +
 //                                   " (The library .jar file is missing.)");
@@ -2286,7 +2258,15 @@ public class PApplet implements PConstants {
                                    " renderer is not in the class path.");
       }
 
-    } catch (Exception e) {
+    }
+      // Is this true anymore, since the JARs contain the native libs?
+      /*
+      // removing for 3.2, we'll see
+      if (platform == MACOSX) {
+      target.printStackTrace(System.out);  // OS X bug (still true?)
+      }
+       */
+       catch (Exception e) {
       if ((e instanceof IllegalArgumentException) ||
           (e instanceof NoSuchMethodException) ||
           (e instanceof IllegalAccessException)) {
@@ -3705,15 +3685,15 @@ public class PApplet implements PConstants {
       handleMethods("dispose");
     }
 
-    // if (platform == MACOSX) {
-    //   try {
-    //     final String td = "processing.core.ThinkDifferent";
-    //     final Class<?> thinkDifferent = getClass().getClassLoader().loadClass(td);
-    //     thinkDifferent.getMethod("cleanup").invoke(null);
-    //   } catch (Exception e) {
-    //     e.printStackTrace();
-    //   }
-    // }
+    if (platform == MACOSX) {
+      try {
+        final String td = "processing.core.ThinkDifferent";
+        final Class<?> thinkDifferent = getClass().getClassLoader().loadClass(td);
+        thinkDifferent.getMethod("cleanup").invoke(null);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
 
   }
 
@@ -3724,7 +3704,7 @@ public class PApplet implements PConstants {
 
   /**
    * Call a method in the current class based on its name.
-   * <p>
+   * <p/>
    * Note that the function being called must be public. Inside the PDE,
    * 'public' is automatically added, but when used without the preprocessor,
    * (like from Eclipse) you'll have to do it yourself.
@@ -3753,7 +3733,7 @@ public class PApplet implements PConstants {
    * Launch a new thread and call the specified function from that new thread.
    * This is a very simple way to do a thread without needing to get into
    * classes, runnables, etc.
-   * <p>
+   * <p/>
    * Note that the function being called must be public. Inside the PDE,
    * 'public' is automatically added, but when used without the preprocessor,
    * (like from Eclipse) you'll have to do it yourself.
@@ -7603,7 +7583,7 @@ public class PApplet implements PConstants {
   /**
    * Identical to the other saveStream(), but writes to a File
    * object, for greater control over the file location.
-   * <p>
+   * <p/>
    * Note that unlike other api methods, this will not automatically
    * compress or uncompress gzip files.
    */
@@ -7886,11 +7866,11 @@ public class PApplet implements PConstants {
    * Prepend the sketch folder path to the filename (or path) that is
    * passed in. External libraries should use this function to save to
    * the sketch folder.
-   * <p>
+   * <p/>
    * Note that when running as an applet inside a web browser,
    * the sketchPath will be set to null, because security restrictions
    * prevent applets from accessing that information.
-   * <p>
+   * <p/>
    * This will also cause an error if the sketch is not inited properly,
    * meaning that init() was never called on the PApplet when hosted
    * my some other main() or by other code. For proper use of init(),
@@ -7919,7 +7899,7 @@ public class PApplet implements PConstants {
   /**
    * Returns a path inside the applet folder to save to. Like sketchPath(),
    * but creates any in-between folders so that things save properly.
-   * <p>
+   * <p/>
    * All saveXxxx() functions use the path to the sketch folder, rather than
    * its data folder. Once exported, the data folder will be found inside the
    * jar file of the exported application or applet. In this case, it's not
@@ -10703,18 +10683,18 @@ public class PApplet implements PConstants {
       }
     }
 
-    // if (platform == MACOSX) {
-    //   try {
-    //     final String td = "processing.core.ThinkDifferent";
-    //     Class<?> thinkDifferent =
-    //       Thread.currentThread().getContextClassLoader().loadClass(td);
-    //     Method method =
-    //       thinkDifferent.getMethod("init", new Class[] { PApplet.class });
-    //     method.invoke(null, new Object[] { sketch });
-    //   } catch (Exception e) {
-    //     e.printStackTrace();  // That's unfortunate
-    //   }
-    // }
+    if (platform == MACOSX) {
+      try {
+        final String td = "processing.core.ThinkDifferent";
+        Class<?> thinkDifferent =
+          Thread.currentThread().getContextClassLoader().loadClass(td);
+        Method method =
+          thinkDifferent.getMethod("init", new Class[] { PApplet.class });
+        method.invoke(null, new Object[] { sketch });
+      } catch (Exception e) {
+        e.printStackTrace();  // That's unfortunate
+      }
+    }
 
     // Set the suggested display that's coming from the command line
     // (and most likely, from the PDE's preference setting).
