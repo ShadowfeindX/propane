@@ -23,6 +23,10 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import static processing.core.PConstants.*;
 
+/**
+ *
+ * @author tux
+ */
 public class CustomVerticalSlider extends SliderBar {
 
     /**

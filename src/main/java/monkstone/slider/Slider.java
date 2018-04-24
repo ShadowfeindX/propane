@@ -11,8 +11,14 @@ package monkstone.slider;
  */
 public interface Slider {
 
+    /**
+     *
+     */
     void dispose();
 
+    /**
+     *
+     */
     void draw();
 
     /**

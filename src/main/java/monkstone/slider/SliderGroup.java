@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import processing.core.PApplet;
 
+/**
+ *
+ * @author tux
+ */
 public class SliderGroup {
 
     int count = 0;
@@ -30,16 +34,29 @@ public class SliderGroup {
     PApplet applet;
     boolean vertical;
 
+    /**
+     *
+     * @param outer
+     */
     public SliderGroup(final PApplet outer) {
         applet = outer;
         sliders = new ArrayList<>();
         vertical = false;
     }
 
+    /**
+     *
+     */
     public void vertical() {
         vertical = true;
     }
 
+    /**
+     *
+     * @param beginRange
+     * @param endRange
+     * @param initial
+     */
     public void addSlider(float beginRange, float endRange, float initial) {
         if (vertical) {
             sliders.add(new SimpleVerticalSlider(applet, beginRange, endRange, initial, count));
@@ -49,6 +66,11 @@ public class SliderGroup {
         count = sliders.size();
     }
 
+    /**
+     *
+     * @param count
+     * @return
+     */
     public float readValue(int count) {
         return sliders.get(count).readValue();
     }

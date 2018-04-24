@@ -47,18 +47,29 @@ public class PShapeJava2D extends PShapeSVG {
   Paint strokeGradientPaint;
   Paint fillGradientPaint;
 
-
-  public PShapeJava2D(XML svg) {
+    /**
+     *
+     * @param svg
+     */
+    public PShapeJava2D(XML svg) {
     super(svg);
   }
 
-
-  public PShapeJava2D(PShapeSVG parent, XML properties, boolean parseKids) {
+    /**
+     *
+     * @param parent
+     * @param properties
+     * @param parseKids
+     */
+    public PShapeJava2D(PShapeSVG parent, XML properties, boolean parseKids) {
     super(parent, properties, parseKids);
   }
 
-
-  @Override
+    /**
+     *
+     * @param parent
+     */
+    @Override
   protected void setParent(PShapeSVG parent) {
     super.setParent(parent);
 
@@ -74,7 +85,11 @@ public class PShapeJava2D extends PShapeSVG {
   }
 
 
-  /** Factory method for subclasses. */
+  /** Factory method for subclasses.
+     * @param parent
+     * @param properties
+     * @param parseKids
+     * @return  */
   @Override
   protected PShapeSVG createShape(PShapeSVG parent, XML properties, boolean parseKids) {
     return new PShapeJava2D(parent, properties, parseKids);
@@ -298,8 +313,12 @@ public class PShapeJava2D extends PShapeSVG {
     }
   }
 
-
-  protected Paint calcGradientPaint(Gradient gradient) {
+    /**
+     *
+     * @param gradient
+     * @return
+     */
+    protected Paint calcGradientPaint(Gradient gradient) {
     if (gradient instanceof LinearGradient) {
 //      System.out.println("creating linear gradient");
       LinearGradient grad = (LinearGradient) gradient;
@@ -343,6 +362,11 @@ public class PShapeJava2D extends PShapeSVG {
 
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    /**
+     *
+     * @param g
+     */
 
 
   @Override

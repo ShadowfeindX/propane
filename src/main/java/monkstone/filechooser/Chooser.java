@@ -40,5 +40,9 @@ import java.io.File;
  */
 public interface Chooser {
 
+    /**
+     *
+     * @param selection
+     */
     public void file_selected(File selection);
 }

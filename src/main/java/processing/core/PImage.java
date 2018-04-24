@@ -99,7 +99,11 @@ public class PImage implements PConstants, Cloneable {
 
   /** Actual dimensions of pixels array, taking into account the 2x setting. */
   public int pixelWidth;
-  public int pixelHeight;
+
+    /**
+     *
+     */
+    public int pixelHeight;
 
   /**
    * ( begin auto-generated from PImage_width.xml )
@@ -137,7 +141,26 @@ public class PImage implements PConstants, Cloneable {
 
   /** modified portion of the image */
   protected boolean modified;
-  protected int mx1, my1, mx2, my2;
+
+    /**
+     *
+     */
+    protected int mx1,
+
+    /**
+     *
+     */
+    my1,
+
+    /**
+     *
+     */
+    mx2,
+
+    /**
+     *
+     */
+    my2;
 
   /** Loaded pixels flag */
   public boolean loaded = false;
@@ -166,10 +189,26 @@ public class PImage implements PConstants, Cloneable {
   private int[][] blurMult;
 
   // colour component bitmasks (moved from PConstants in 2.0b7)
+
+    /**
+     *
+     */
   public static final int ALPHA_MASK = 0xff000000;
-  public static final int RED_MASK   = 0x00ff0000;
-  public static final int GREEN_MASK = 0x0000ff00;
-  public static final int BLUE_MASK  = 0x000000ff;
+
+    /**
+     *
+     */
+    public static final int RED_MASK   = 0x00ff0000;
+
+    /**
+     *
+     */
+    public static final int GREEN_MASK = 0x0000ff00;
+
+    /**
+     *
+     */
+    public static final int BLUE_MASK  = 0x000000ff;
 
 
   //////////////////////////////////////////////////////////////
@@ -227,6 +266,8 @@ public class PImage implements PConstants, Cloneable {
 
 
   /**
+     * @param width
+     * @param height
    * @nowebref
    * @param format Either RGB, ARGB, ALPHA (grayscale alpha channel)
    */
@@ -234,14 +275,23 @@ public class PImage implements PConstants, Cloneable {
     init(width, height, format, 1);
   }
 
-
-  public PImage(int width, int height, int format, int factor) {
+    /**
+     *
+     * @param width
+     * @param height
+     * @param format
+     * @param factor
+     */
+    public PImage(int width, int height, int format, int factor) {
     init(width, height, format, factor);
   }
 
 
   /**
    * Do not remove, see notes in the other variant.
+     * @param width
+     * @param height
+     * @param format
    */
   public void init(int width, int height, int format) {  // ignore
     init(width, height, format, 1);
@@ -254,6 +304,10 @@ public class PImage implements PConstants, Cloneable {
    * Used by Capture and Movie classes (and perhaps others),
    * because the width/height will not be known when super() is called.
    * (Leave this public so that other libraries can do the same.)
+     * @param width
+     * @param factor
+     * @param height
+     * @param format
    */
   public void init(int width, int height, int format, int factor) {  // ignore
     this.width = width;
@@ -346,6 +400,7 @@ public class PImage implements PConstants, Cloneable {
    * Use the getNative() method instead, which allows library interfaces to be
    * written in a cross-platform fashion for desktop, Android, and others.
    * This is still included for PGraphics objects, which may need the image.
+     * @return 
    */
   public Image getImage() {  // ignore
     return (Image) getNative();
@@ -354,6 +409,7 @@ public class PImage implements PConstants, Cloneable {
 
   /**
    * Returns a native BufferedImage from this PImage.
+     * @return 
    */
   public Object getNative() {  // ignore
     loadPixels();
@@ -370,13 +426,20 @@ public class PImage implements PConstants, Cloneable {
 
   // MARKING IMAGE AS MODIFIED / FOR USE w/ GET/SET
 
+    /**
+     *
+     * @return
+     */
+
 
   public boolean isModified() {  // ignore
     return modified;
   }
 
-
-  public void setModified() {  // ignore
+    /**
+     *
+     */
+    public void setModified() {  // ignore
     modified = true;
     mx1 = 0;
     my1 = 0;
@@ -384,28 +447,43 @@ public class PImage implements PConstants, Cloneable {
     my2 = pixelHeight;
   }
 
-
-  public void setModified(boolean m) {  // ignore
+    /**
+     *
+     * @param m
+     */
+    public void setModified(boolean m) {  // ignore
     modified = m;
   }
 
-
-  public int getModifiedX1() {  // ignore
+    /**
+     *
+     * @return
+     */
+    public int getModifiedX1() {  // ignore
     return mx1;
   }
 
-
-  public int getModifiedX2() {  // ignore
+    /**
+     *
+     * @return
+     */
+    public int getModifiedX2() {  // ignore
     return mx2;
   }
 
-
-  public int getModifiedY1() {  // ignore
+    /**
+     *
+     * @return
+     */
+    public int getModifiedY1() {  // ignore
     return my1;
   }
 
-
-  public int getModifiedY2() {  // ignore
+    /**
+     *
+     * @return
+     */
+    public int getModifiedY2() {  // ignore
     return my2;
   }
 
@@ -442,8 +520,10 @@ public class PImage implements PConstants, Cloneable {
     setLoaded();
   }
 
-
-  public void updatePixels() {  // ignore
+    /**
+     *
+     */
+    public void updatePixels() {  // ignore
     updatePixels(0, 0, pixelWidth, pixelHeight);
   }
 
@@ -516,6 +596,8 @@ public class PImage implements PConstants, Cloneable {
    * override of Object.clone(). We recommend using get() instead,
    * because it prevents you from needing to catch the
    * CloneNotSupportedException, and from doing a cast from the result.
+     * @return 
+     * @throws java.lang.CloneNotSupportedException
    */
   @Override
   public Object clone() throws CloneNotSupportedException {  // ignore
@@ -652,18 +734,28 @@ public class PImage implements PConstants, Cloneable {
 
   // MARKING IMAGE AS LOADED / FOR USE IN RENDERERS
 
+    /**
+     *
+     * @return
+     */
+
 
   public boolean isLoaded() { // ignore
     return loaded;
   }
 
-
-  public void setLoaded() {  // ignore
+    /**
+     *
+     */
+    public void setLoaded() {  // ignore
     loaded = true;
   }
 
-
-  public void setLoaded(boolean l) {  // ignore
+    /**
+     *
+     * @param l
+     */
+    public void setLoaded(boolean l) {  // ignore
     loaded = l;
   }
 
@@ -715,6 +807,7 @@ public class PImage implements PConstants, Cloneable {
    * type it is. If you want things to be more efficient, access the
    * pixels[] array directly.
    *
+     * @return 
    * @webref image:pixels
    * @brief Reads the color of any pixel or grabs a rectangle of pixels
    * @usage web_application
@@ -742,8 +835,11 @@ public class PImage implements PConstants, Cloneable {
 
 
   /**
+     * @param x
+     * @param y
    * @param w width of pixel rectangle to get
    * @param h height of pixel rectangle to get
+     * @return 
    */
   public PImage get(int x, int y, int w, int h) {
     int targetX = 0;
@@ -800,6 +896,7 @@ public class PImage implements PConstants, Cloneable {
   /**
    * Returns a copy of this PImage. Equivalent to get(0, 0, width, height).
    * Deprecated, just use copy() instead.
+     * @return 
    */
   public PImage get() {
     // Formerly this used clone(), which caused memory problems.
@@ -807,8 +904,11 @@ public class PImage implements PConstants, Cloneable {
     return get(0, 0, pixelWidth, pixelHeight);
   }
 
-
-  public PImage copy() {
+    /**
+     *
+     * @return
+     */
+    public PImage copy() {
     return get(0, 0, pixelWidth, pixelHeight);
   }
 
@@ -818,6 +918,13 @@ public class PImage implements PConstants, Cloneable {
    * has already been properly cropped to a valid region. That is, x/y/w/h
    * are guaranteed to be inside the image space, so the implementation can
    * use the fastest possible pixel copying method.
+     * @param sourceX
+     * @param sourceY
+     * @param sourceWidth
+     * @param target
+     * @param sourceHeight
+     * @param targetX
+     * @param targetY
    */
   protected void getImpl(int sourceX, int sourceY,
                          int sourceWidth, int sourceHeight,
@@ -876,7 +983,9 @@ public class PImage implements PConstants, Cloneable {
    * No variations are employed, meaning that any scale, tint, or imageMode
    * settings will be ignored.
    *
+     * @param x
    * @param img image to copy into the original image
+     * @param y
    */
   public void set(int x, int y, PImage img) {
     int sx = 0;
@@ -911,6 +1020,13 @@ public class PImage implements PConstants, Cloneable {
   /**
    * Internal function to actually handle setting a block of pixels that
    * has already been properly cropped from the image to a valid region.
+     * @param sourceImage
+     * @param sourceX
+     * @param targetY
+     * @param sourceHeight
+     * @param sourceY
+     * @param sourceWidth
+     * @param targetX
    */
   protected void setImpl(PImage sourceImage,
                          int sourceX, int sourceY,
@@ -999,6 +1115,11 @@ public class PImage implements PConstants, Cloneable {
   //////////////////////////////////////////////////////////////
 
   // IMAGE FILTERS
+
+    /**
+     *
+     * @param kind
+     */
 
 
   public void filter(int kind) {
@@ -1208,6 +1329,7 @@ public class PImage implements PConstants, Cloneable {
    * bigger speed gains for larger radii (~30%)
    * added support for various image types (ALPHA, RGB, ARGB)
    * [toxi 050728]
+     * @param r
    */
   protected void buildBlurKernel(float r) {
     int radius = (int) (r * 3.5f);
@@ -1235,8 +1357,11 @@ public class PImage implements PConstants, Cloneable {
     }
   }
 
-
-  protected void blurAlpha(float r) {
+    /**
+     *
+     * @param r
+     */
+    protected void blurAlpha(float r) {
     int sum, cb;
     int read, ri, ym, ymi, bk0;
     int b2[] = new int[pixels.length];
@@ -1306,8 +1431,11 @@ public class PImage implements PConstants, Cloneable {
     }
   }
 
-
-  protected void blurRGB(float r) {
+    /**
+     *
+     * @param r
+     */
+    protected void blurRGB(float r) {
     int sum, cr, cg, cb; //, k;
     int /*pixel,*/ read, ri, /*roff,*/ ym, ymi, /*riw,*/ bk0;
     int r2[] = new int[pixels.length];
@@ -1388,8 +1516,11 @@ public class PImage implements PConstants, Cloneable {
     }
   }
 
-
-  protected void blurARGB(float r) {
+    /**
+     *
+     * @param r
+     */
+    protected void blurARGB(float r) {
     int sum, cr, cg, cb, ca;
     int /*pixel,*/ read, ri, /*roff,*/ ym, ymi, /*riw,*/ bk0;
     int wh = pixels.length;
@@ -1548,8 +1679,10 @@ public class PImage implements PConstants, Cloneable {
     System.arraycopy(outgoing, 0, pixels, 0, maxIndex);
   }
 
-
-  protected void erode() {  // formerly dilate(true)
+    /**
+     *
+     */
+    protected void erode() {  // formerly dilate(true)
     int index = 0;
     int maxIndex = pixels.length;
     int[] outgoing = new int[maxIndex];
@@ -1659,6 +1792,14 @@ public class PImage implements PConstants, Cloneable {
 
 /**
  * @param src an image variable referring to the source image.
+     * @param sx
+     * @param sy
+     * @param dh
+     * @param sw
+     * @param dx
+     * @param sh
+     * @param dy
+     * @param dw
  */
   public void copy(PImage src,
                    int sx, int sy, int sw, int sh,
@@ -1744,6 +1885,7 @@ public class PImage implements PConstants, Cloneable {
    * are preferrable, and the difference is insignificant for applications
    * built with Processing.</P>
    *
+     * @return 
    * @webref color:creating_reading
    * @usage web_application
    * @param c1 the first color to blend
@@ -1779,8 +1921,19 @@ public class PImage implements PConstants, Cloneable {
     return 0;
   }
 
-
-  public void blend(int sx, int sy, int sw, int sh,
+    /**
+     *
+     * @param sx
+     * @param sy
+     * @param sw
+     * @param sh
+     * @param dx
+     * @param dy
+     * @param dw
+     * @param dh
+     * @param mode
+     */
+    public void blend(int sx, int sy, int sw, int sh,
                     int dx, int dy, int dw, int dh, int mode) {
     blend(this, sx, sy, sw, sh, dx, dy, dw, dh, mode);
   }
@@ -2961,7 +3114,12 @@ int testFunction(int dst, int src) {
   static final String TIFF_ERROR =
     "Error: Processing can only read its own TIFF files.";
 
-  static protected PImage loadTIFF(byte tiff[]) {
+    /**
+     *
+     * @param tiff
+     * @return
+     */
+    static protected PImage loadTIFF(byte tiff[]) {
     if ((tiff[42] != tiff[102]) ||  // width/height in both places
         (tiff[43] != tiff[103])) {
       System.err.println(TIFF_ERROR);
@@ -3008,8 +3166,12 @@ int testFunction(int dst, int src) {
     return outgoing;
   }
 
-
-  protected boolean saveTIFF(OutputStream output) {
+    /**
+     *
+     * @param output
+     * @return
+     */
+    protected boolean saveTIFF(OutputStream output) {
     // shutting off the warning, people can figure this out themselves
     /*
     if (format != RGB) {
@@ -3067,6 +3229,8 @@ int testFunction(int dst, int src) {
    * </p>
    * Contributed by toxi 8-10 May 2005, based on this RLE
    * <A HREF="http://www.wotsit.org/download.asp?f=tga">specification</A>
+     * @param output
+     * @return 
    */
   protected boolean saveTGA(OutputStream output) {
     byte header[] = new byte[18];
@@ -3209,6 +3373,9 @@ int testFunction(int dst, int src) {
    * Various formats are supported, typically jpeg, png, bmp, and wbmp.
    * To get a list of the supported formats for writing, use: <BR>
    * <TT>println(javax.imageio.ImageIO.getReaderFormatNames())</TT>
+     * @param path
+     * @return 
+     * @throws java.io.IOException
    */
   protected boolean saveImageIO(String path) throws IOException {
     try {
@@ -3322,8 +3489,10 @@ int testFunction(int dst, int src) {
     return null;
   }
 
-
-  protected String[] saveImageFormats;
+    /**
+     *
+     */
+    protected String[] saveImageFormats;
 
   /**
    * ( begin auto-generated from PImage_save.xml )
@@ -3366,6 +3535,7 @@ int testFunction(int dst, int src) {
    * require a black and white image. Basic testing produced a zero-length
    * file with no error.
    *
+     * @return 
    * @webref pimage:method
    * @brief Saves the image to a TIFF, TARGA, PNG, or JPEG file
    * @usage application

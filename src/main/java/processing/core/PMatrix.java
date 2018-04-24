@@ -43,89 +43,197 @@ public interface PMatrix {
   
   /**
    * Returns a copy of this PMatrix.
+     * @return 
    */
   public PMatrix get();  
 
   /**
    * Copies the matrix contents into a float array.
    * If target is null (or not the correct size), a new array will be created.
+     * @param target
+     * @return 
    */
   public float[] get(float[] target);
   
   
   /**
    * Make this matrix become a copy of src.
+     * @param src
    */
   public void set(PMatrix src);
 
   /**
    * Set the contents of this matrix to the contents of source. Fills the
    * matrix left-to-right, starting in the top row.
+     * @param source
    */
   public void set(float[] source);
 
   /**
    * Set the matrix content to this 2D matrix or its 3D equivalent.
+     * @param m00
+     * @param m01
+     * @param m10
+     * @param m02
+     * @param m12
+     * @param m11
    */
   public void set(float m00, float m01, float m02, 
                   float m10, float m11, float m12);
 
   /**
    * Set the matrix content to the 3D matrix supplied, if this matrix is 3D.
+     * @param m00
+     * @param m01
+     * @param m20
+     * @param m02
+     * @param m03
+     * @param m10
+     * @param m12
+     * @param m11
+     * @param m22
+     * @param m33
+     * @param m13
+     * @param m23
+     * @param m30
+     * @param m31
+     * @param m21
+     * @param m32
    */
   public void set(float m00, float m01, float m02, float m03,
                   float m10, float m11, float m12, float m13,
                   float m20, float m21, float m22, float m23,
                   float m30, float m31, float m32, float m33);
 
+    /**
+     *
+     * @param tx
+     * @param ty
+     */
+    public void translate(float tx, float ty);
   
-  public void translate(float tx, float ty);
+    /**
+     *
+     * @param tx
+     * @param ty
+     * @param tz
+     */
+    public void translate(float tx, float ty, float tz);
+
+    /**
+     *
+     * @param angle
+     */
+    public void rotate(float angle);
+
+    /**
+     *
+     * @param angle
+     */
+    public void rotateX(float angle);
+
+    /**
+     *
+     * @param angle
+     */
+    public void rotateY(float angle);
+
+    /**
+     *
+     * @param angle
+     */
+    public void rotateZ(float angle);
+
+    /**
+     *
+     * @param angle
+     * @param v0
+     * @param v1
+     * @param v2
+     */
+    public void rotate(float angle, float v0, float v1, float v2);
+
+    /**
+     *
+     * @param s
+     */
+    public void scale(float s);
+
+    /**
+     *
+     * @param sx
+     * @param sy
+     */
+    public void scale(float sx, float sy);
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void scale(float x, float y, float z);
   
-  public void translate(float tx, float ty, float tz);
-
-  public void rotate(float angle);
-
-  public void rotateX(float angle);
-
-  public void rotateY(float angle);
-
-  public void rotateZ(float angle);
-
-  public void rotate(float angle, float v0, float v1, float v2);
-
-  public void scale(float s);
-
-  public void scale(float sx, float sy);
-
-  public void scale(float x, float y, float z);
+    /**
+     *
+     * @param angle
+     */
+    public void shearX(float angle);
   
-  public void shearX(float angle);
-  
-  public void shearY(float angle);
+    /**
+     *
+     * @param angle
+     */
+    public void shearY(float angle);
 
   /**
    * Multiply this matrix by another.
+     * @param source
    */
   public void apply(PMatrix source);
 
   /**
    * Multiply this matrix by another.
+     * @param source
    */
   public void apply(PMatrix2D source);
 
   /**
    * Multiply this matrix by another.
+     * @param source
    */
   public void apply(PMatrix3D source);
 
   /**
    * Multiply this matrix by another.
+     * @param n00
+     * @param n11
+     * @param n02
+     * @param n10
+     * @param n01
+     * @param n12
    */
   public void apply(float n00, float n01, float n02, 
                     float n10, float n11, float n12);
 
   /**
    * Multiply this matrix by another.
+     * @param n00
+     * @param n32
+     * @param n02
+     * @param n01
+     * @param n21
+     * @param n10
+     * @param n03
+     * @param n11
+     * @param n13
+     * @param n23
+     * @param n22
+     * @param n20
+     * @param n12
+     * @param n31
+     * @param n30
+     * @param n33
    */
   public void apply(float n00, float n01, float n02, float n03,
                     float n10, float n11, float n12, float n13,
@@ -134,27 +242,52 @@ public interface PMatrix {
 
   /**
    * Apply another matrix to the left of this one.
+     * @param left
    */
   public void preApply(PMatrix left);
 
   /**
    * Apply another matrix to the left of this one.
+     * @param left
    */
   public void preApply(PMatrix2D left);
 
   /**
    * Apply another matrix to the left of this one. 3D only.
+     * @param left
    */
   public void preApply(PMatrix3D left);
 
   /**
    * Apply another matrix to the left of this one.
+     * @param n00
+     * @param n12
+     * @param n02
+     * @param n10
+     * @param n01
+     * @param n11
    */
   public void preApply(float n00, float n01, float n02, 
                        float n10, float n11, float n12);
 
   /**
    * Apply another matrix to the left of this one. 3D only.
+     * @param n00
+     * @param n10
+     * @param n02
+     * @param n01
+     * @param n33
+     * @param n13
+     * @param n11
+     * @param n03
+     * @param n20
+     * @param n21
+     * @param n12
+     * @param n30
+     * @param n23
+     * @param n22
+     * @param n32
+     * @param n31
    */
   public void preApply(float n00, float n01, float n02, float n03,
                        float n10, float n11, float n12, float n13,
@@ -167,6 +300,9 @@ public interface PMatrix {
    * The result will be stored in target if target is non-null, and target
    * will then be the matrix returned. This improves performance if you reuse
    * target, so it's recommended if you call this many times in draw().
+     * @param source
+     * @param target
+     * @return 
    */
   public PVector mult(PVector source, PVector target);
   
@@ -175,6 +311,9 @@ public interface PMatrix {
    * Multiply a multi-element vector against this matrix.
    * Supplying and recycling a target array improves performance, so it's
    * recommended if you call this many times in draw().
+     * @param source
+     * @param target
+     * @return 
    */
   public float[] mult(float[] source, float[] target);
   

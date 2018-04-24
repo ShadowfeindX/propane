@@ -28,23 +28,55 @@ package processing.core;
  * class for other drawing surfaces. It includes the standard rendering loop.
  */
 public class PSurfaceNone implements PSurface {
-  protected PApplet sketch;
-  protected PGraphics graphics;
 
-  protected Thread thread;
-  protected boolean paused;
-  protected Object pauseObject = new Object();
+    /**
+     *
+     */
+    protected PApplet sketch;
 
-  protected float frameRateTarget = 60;
-  protected long frameRatePeriod = 1000000000L / 60L;
+    /**
+     *
+     */
+    protected PGraphics graphics;
 
+    /**
+     *
+     */
+    protected Thread thread;
 
-  public PSurfaceNone(PGraphics graphics) {
+    /**
+     *
+     */
+    protected boolean paused;
+
+    /**
+     *
+     */
+    protected Object pauseObject = new Object();
+
+    /**
+     *
+     */
+    protected float frameRateTarget = 60;
+
+    /**
+     *
+     */
+    protected long frameRatePeriod = 1000000000L / 60L;
+
+    /**
+     *
+     * @param graphics
+     */
+    public PSurfaceNone(PGraphics graphics) {
     this.graphics = graphics;
   }
 
-
-  @Override
+    /**
+     *
+     * @param sketch
+     */
+    @Override
   public void initOffscreen(PApplet sketch) {
     this.sketch = sketch;
 
@@ -55,6 +87,11 @@ public class PSurfaceNone implements PSurface {
 //  public Component initComponent(PApplet sketch) {
 //    return null;
 //  }
+
+    /**
+     *
+     * @param sketch
+     */
 
 
   @Override
@@ -72,42 +109,57 @@ public class PSurfaceNone implements PSurface {
   }
 
 
-  /** Set the window (and dock, or whatever necessary) title. */
+  /** Set the window (and dock, or whatever necessary) title.
+     * @param title */
   @Override
   public void setTitle(String title) {
     // You're in a utopian PSurface implementation where titles don't exist.
   }
 
-
-  @Override
+    /**
+     *
+     * @param image
+     */
+    @Override
   public void setIcon(PImage image) {
     // I ain't visible, man.
   }
 
 
-  /** Show or hide the window. */
+  /** Show or hide the window.
+     * @param visible */
   @Override
   public void setVisible(boolean visible) {
     // I'm always invisible. You can't catch me.
   }
 
 
-  /** Set true if we want to resize things (default is not resizable) */
+  /** Set true if we want to resize things (default is not resizable)
+     * @param resizable */
   @Override
   public void setResizable(boolean resizable) {
     // I don't need size to know my worth.
   }
 
-
-  @Override
+    /**
+     *
+     * @param location
+     * @param editorLocation
+     */
+    @Override
   public void placeWindow(int[] location, int[] editorLocation) { }
 
-
-  @Override
+    /**
+     *
+     * @param stopColor
+     */
+    @Override
   public void placePresent(int stopColor) { }
 
-
-  @Override
+    /**
+     *
+     */
+    @Override
   public void setupExternalMessages() { }
 
 
@@ -117,14 +169,24 @@ public class PSurfaceNone implements PSurface {
 
   //
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
+
 
   @Override
   public void setLocation(int x, int y) {
     // I'm everywhere, because I'm nowhere.
   }
 
-
-  @Override
+    /**
+     *
+     * @param wide
+     * @param high
+     */
+    @Override
   public void setSize(int wide, int high) {
     if (PApplet.DEBUG) {
       //System.out.format("frame visible %b, setSize(%d, %d) %n", frame.isVisible(), wide, high);
@@ -169,16 +231,38 @@ public class PSurfaceNone implements PSurface {
 //    // TODO Auto-generated method stub
 //  }
 
+    /**
+     *
+     * @param kind
+     */
+
   public void setCursor(int kind) { }
 
-  public void setCursor(PImage image, int hotspotX, int hotspotY) { }
+    /**
+     *
+     * @param image
+     * @param hotspotX
+     * @param hotspotY
+     */
+    public void setCursor(PImage image, int hotspotX, int hotspotY) { }
 
-  public void showCursor() { }
+    /**
+     *
+     */
+    public void showCursor() { }
 
-  public void hideCursor() { }
+    /**
+     *
+     */
+    public void hideCursor() { }
 
 
   //
+
+    /**
+     *
+     * @return
+     */
 
 
   public Thread createThread() {
@@ -205,8 +289,11 @@ public class PSurfaceNone implements PSurface {
     return true;
   }
 
-
-  public boolean isStopped() {
+    /**
+     *
+     * @return
+     */
+    public boolean isStopped() {
     return thread == null || !thread.isAlive();
   }
 
@@ -219,6 +306,10 @@ public class PSurfaceNone implements PSurface {
 
 
   // halts the animation thread if the pause flag is set
+
+    /**
+     *
+     */
   protected void checkPause() {
     if (paused) {
       synchronized (pauseObject) {
@@ -233,29 +324,43 @@ public class PSurfaceNone implements PSurface {
 //    PApplet.debug("done with pause");
   }
 
-
-  public void resumeThread() {
+    /**
+     *
+     */
+    public void resumeThread() {
     paused = false;
     synchronized (pauseObject) {
       pauseObject.notifyAll();  // wake up the animation thread
     }
   }
 
-
-  public void setFrameRate(float fps) {
+    /**
+     *
+     * @param fps
+     */
+    public void setFrameRate(float fps) {
     frameRateTarget = fps;
     frameRatePeriod = (long) (1000000000.0 / frameRateTarget);
     //g.setFrameRate(fps);
   }
 
+    /**
+     *
+     */
+    public class AnimationThread extends Thread {
 
-  public class AnimationThread extends Thread {
-
-    public AnimationThread() {
+      /**
+       *
+       */
+      public AnimationThread() {
       super("Animation Thread");
     }
 
     // broken out so it can be overridden by Danger et al
+
+      /**
+       *
+       */
     public void callDraw() {
       sketch.handleDraw();
     }

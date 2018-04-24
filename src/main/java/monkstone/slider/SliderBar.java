@@ -22,6 +22,10 @@ package monkstone.slider;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
+/**
+ *
+ * @author tux
+ */
 public abstract class SliderBar implements Slider {
 
     int MIN_BAR_WIDTH = 10;
@@ -168,6 +172,9 @@ public abstract class SliderBar implements Slider {
 
     abstract void drawGui();
 
+    /**
+     *
+     */
     @Override
     public void draw() {
         applet.pushStyle();
@@ -178,6 +185,10 @@ public abstract class SliderBar implements Slider {
         change();
     }
 
+    /**
+     *
+     * @param evt
+     */
     public void mouseEvent(MouseEvent evt) {
         if (evt.getAction() == MouseEvent.WHEEL) {
             if (scrollWheelHandler != null) {
@@ -222,10 +233,28 @@ public abstract class SliderBar implements Slider {
         }
     }
 
+    /**
+     *
+     * @param val
+     * @param begIn
+     * @param endIn
+     * @param beginOut
+     * @param endOut
+     * @return
+     */
     protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
         return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
     }
 
+    /**
+     *
+     * @param val
+     * @param begIn
+     * @param endIn
+     * @param beginOut
+     * @param endOut
+     * @return
+     */
     protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
         double max = Math.max(begIn, endIn);
         double min = Math.min(begIn, endIn);
@@ -238,6 +267,9 @@ public abstract class SliderBar implements Slider {
         return (int) ((beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn))));
     }
 
+    /**
+     *
+     */
     @Override
     public void dispose() {
         setActive(false);

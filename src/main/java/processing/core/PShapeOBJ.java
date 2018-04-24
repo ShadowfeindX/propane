@@ -22,16 +22,29 @@ public class PShapeOBJ extends PShape {
 
   /**
    * Initializes a new OBJ Object with the given filename.
+     * @param parent
+     * @param filename
    */
   public PShapeOBJ(PApplet parent, String filename) {
     this(parent, parent.createReader(filename), getBasePath(parent, filename));
   }
 
-  public PShapeOBJ(PApplet parent, BufferedReader reader) {
+    /**
+     *
+     * @param parent
+     * @param reader
+     */
+    public PShapeOBJ(PApplet parent, BufferedReader reader) {
     this(parent, reader, "");
   }
 
-  public PShapeOBJ(PApplet parent, BufferedReader reader, String basePath) {
+    /**
+     *
+     * @param parent
+     * @param reader
+     * @param basePath
+     */
+    public PShapeOBJ(PApplet parent, BufferedReader reader, String basePath) {
     ArrayList<OBJFace> faces = new ArrayList<OBJFace>();
     ArrayList<OBJMaterial> materials = new ArrayList<OBJMaterial>();
     ArrayList<PVector> coords = new ArrayList<PVector>();
@@ -46,8 +59,15 @@ public class PShapeOBJ extends PShape {
     addChildren(faces, materials, coords, normals, texcoords);
   }
 
-
-  protected PShapeOBJ(OBJFace face, OBJMaterial mtl,
+    /**
+     *
+     * @param face
+     * @param mtl
+     * @param coords
+     * @param normals
+     * @param texcoords
+     */
+    protected PShapeOBJ(OBJFace face, OBJMaterial mtl,
                       ArrayList<PVector> coords,
                       ArrayList<PVector> normals,
                       ArrayList<PVector> texcoords) {
@@ -125,8 +145,15 @@ public class PShapeOBJ extends PShape {
     }
   }
 
-
-  protected void addChildren(ArrayList<OBJFace> faces,
+    /**
+     *
+     * @param faces
+     * @param materials
+     * @param coords
+     * @param normals
+     * @param texcoords
+     */
+    protected void addChildren(ArrayList<OBJFace> faces,
                              ArrayList<OBJMaterial> materials,
                              ArrayList<PVector> coords,
                              ArrayList<PVector> normals,
@@ -149,8 +176,18 @@ public class PShapeOBJ extends PShape {
     }
   }
 
-
-  static protected void parseOBJ(PApplet parent, String path,
+    /**
+     *
+     * @param parent
+     * @param path
+     * @param reader
+     * @param faces
+     * @param materials
+     * @param coords
+     * @param normals
+     * @param texcoords
+     */
+    static protected void parseOBJ(PApplet parent, String path,
                                  BufferedReader reader,
                                  ArrayList<OBJFace> faces,
                                  ArrayList<OBJMaterial> materials,
@@ -316,8 +353,16 @@ public class PShapeOBJ extends PShape {
     }
   }
 
-
-  static protected void parseMTL(PApplet parent, String mtlfn, String path,
+    /**
+     *
+     * @param parent
+     * @param mtlfn
+     * @param path
+     * @param reader
+     * @param materials
+     * @param materialsHash
+     */
+    static protected void parseMTL(PApplet parent, String mtlfn, String path,
                                  BufferedReader reader,
                                  ArrayList<OBJMaterial> materials,
                                  Map<String, Integer> materialsHash) {
@@ -388,7 +433,14 @@ public class PShapeOBJ extends PShape {
     }
   }
 
-  protected static OBJMaterial addMaterial(String mtlname,
+    /**
+     *
+     * @param mtlname
+     * @param materials
+     * @param materialsHash
+     * @return
+     */
+    protected static OBJMaterial addMaterial(String mtlname,
                                            ArrayList<OBJMaterial> materials,
                                            Map<String, Integer> materialsHash) {
     OBJMaterial currentMtl = new OBJMaterial(mtlname);
@@ -397,14 +449,24 @@ public class PShapeOBJ extends PShape {
     return currentMtl;
   }
 
-  protected static int rgbaValue(PVector color) {
+    /**
+     *
+     * @param color
+     * @return
+     */
+    protected static int rgbaValue(PVector color) {
     return 0xFF000000 | ((int)(color.x * 255) << 16) |
                         ((int)(color.y * 255) <<  8) |
                          (int)(color.z * 255);
   }
 
-
-  protected static int rgbaValue(PVector color, float alpha) {
+    /**
+     *
+     * @param color
+     * @param alpha
+     * @return
+     */
+    protected static int rgbaValue(PVector color, float alpha) {
     return ((int)(alpha * 255)   << 24) |
            ((int)(color.x * 255) << 16) |
            ((int)(color.y * 255) <<  8) |
@@ -413,6 +475,10 @@ public class PShapeOBJ extends PShape {
 
 
   // Stores a face from an OBJ file
+
+    /**
+     *
+     */
   static protected class OBJFace {
     ArrayList<Integer> vertIdx;
     ArrayList<Integer> texIdx;
@@ -429,8 +495,13 @@ public class PShapeOBJ extends PShape {
     }
   }
 
-
-  static protected String getBasePath(PApplet parent, String filename) {
+    /**
+     *
+     * @param parent
+     * @param filename
+     * @return
+     */
+    static protected String getBasePath(PApplet parent, String filename) {
     // Obtaining the path
     File file = new File(parent.dataPath(filename));
     if (!file.exists()) {
@@ -443,6 +514,10 @@ public class PShapeOBJ extends PShape {
 
 
   // Stores a material defined in an MTL file.
+
+    /**
+     *
+     */
   static protected class OBJMaterial {
     String name;
     PVector ka;

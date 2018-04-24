@@ -17,6 +17,10 @@
 
 package monkstone.noise;
 
+/**
+ *
+ * @author tux
+ */
 public class SimplexNoise {  // Simplex noise in 2D, 3D and 4D
 
     private static Grad grad3[] = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
@@ -83,6 +87,13 @@ public class SimplexNoise {  // Simplex noise in 2D, 3D and 4D
     }
 
     // 2D simplex noise
+
+    /**
+     *
+     * @param xin
+     * @param yin
+     * @return
+     */
     public static double noise(double xin, double yin) {
         double n0, n1, n2; // Noise contributions from the three corners
         // Skew the input space to determine which simplex cell we're in
@@ -146,6 +157,14 @@ public class SimplexNoise {  // Simplex noise in 2D, 3D and 4D
     }
 
     // 3D simplex noise
+
+    /**
+     *
+     * @param xin
+     * @param yin
+     * @param zin
+     * @return
+     */
     public static double noise(double xin, double yin, double zin) {
         double n0, n1, n2, n3; // Noise contributions from the four corners
         // Skew the input space to determine which simplex cell we're in
@@ -271,6 +290,15 @@ public class SimplexNoise {  // Simplex noise in 2D, 3D and 4D
     }
 
     // 4D simplex noise, better simplex rank ordering method 2012-03-09
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return
+     */
     public static double noise(double x, double y, double z, double w) {
 
         double n0, n1, n2, n3, n4; // Noise contributions from the five corners

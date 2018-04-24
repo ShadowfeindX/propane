@@ -89,6 +89,10 @@ public class PShapeSVG extends PShape {
   XML element;
 
   /// Values between 0 and 1.
+
+    /**
+     *
+     */
   protected float opacity;
   float strokeOpacity;
   float fillOpacity;
@@ -102,15 +106,22 @@ public class PShapeSVG extends PShape {
   /** √((w² + h²)/2) of containing SVG (used for percentages). */
   protected float svgSizeXY;
 
-  protected Gradient strokeGradient;
+    /**
+     *
+     */
+    protected Gradient strokeGradient;
   String strokeName;  // id of another object, gradients only?
 
-  protected Gradient fillGradient;
+    /**
+     *
+     */
+    protected Gradient fillGradient;
   String fillName;  // id of another object
 
 
   /**
    * Initializes a new SVG object from the given XML object.
+     * @param svg
    */
   public PShapeSVG(XML svg) {
     this(null, svg, true);
@@ -125,8 +136,13 @@ public class PShapeSVG extends PShape {
     }
   }
 
-
-  protected PShapeSVG(PShapeSVG parent, XML properties, boolean parseKids) {
+    /**
+     *
+     * @param parent
+     * @param properties
+     * @param parseKids
+     */
+    protected PShapeSVG(PShapeSVG parent, XML properties, boolean parseKids) {
     setParent(parent);
 
     // Need to get width/height in early.
@@ -213,6 +229,11 @@ public class PShapeSVG extends PShape {
 
   // Broken out so that subclasses can copy any additional variables
   // (i.e. fillGradientPaint and strokeGradientPaint)
+
+    /**
+     *
+     * @param parent
+     */
   protected void setParent(PShapeSVG parent) {
     // Need to set this so that findChild() works.
     // Otherwise 'parent' is null until addChild() is called later.
@@ -274,13 +295,20 @@ public class PShapeSVG extends PShape {
   }
 
 
-  /** Factory method for subclasses. */
+  /** Factory method for subclasses.
+     * @param parent
+     * @param properties
+     * @param parseKids
+     * @return  */
   protected PShapeSVG createShape(PShapeSVG parent, XML properties, boolean parseKids) {
     return new PShapeSVG(parent, properties, parseKids);
   }
 
-
-  protected void parseChildren(XML graphics) {
+    /**
+     *
+     * @param graphics
+     */
+    protected void parseChildren(XML graphics) {
     XML[] elements = graphics.getChildren();
     children = new PShape[elements.length];
     childCount = 0;
@@ -296,6 +324,8 @@ public class PShapeSVG extends PShape {
   /**
    * Parse a child XML element.
    * Override this method to add parsing for more SVG elements.
+     * @param elem
+     * @return 
    */
   protected PShape parseChild(XML elem) {
 //    System.err.println("parsing child in pshape " + elem.getName());
@@ -389,8 +419,10 @@ public class PShapeSVG extends PShape {
     return shape;
   }
 
-
-  protected void parseLine() {
+    /**
+     *
+     */
+    protected void parseLine() {
     kind = LINE;
     family = PRIMITIVE;
     params = new float[] {
@@ -428,8 +460,10 @@ public class PShapeSVG extends PShape {
     params[3] = ry*2;
   }
 
-
-  protected void parseRect() {
+    /**
+     *
+     */
+    protected void parseRect() {
     kind = RECT;
     family = PRIMITIVE;
     params = new float[] {
@@ -463,8 +497,10 @@ public class PShapeSVG extends PShape {
     }
   }
 
-
-  protected void parsePath() {
+    /**
+     *
+     */
+    protected void parsePath() {
     family = PATH;
     kind = 0;
 
@@ -1037,8 +1073,12 @@ public class PShapeSVG extends PShape {
     return outgoing;
   }
 
-
-  static protected PMatrix2D parseSingleTransform(String matrixStr) {
+    /**
+     *
+     * @param matrixStr
+     * @return
+     */
+    static protected PMatrix2D parseSingleTransform(String matrixStr) {
     //String[] pieces = PApplet.match(matrixStr, "^\\s*(\\w+)\\((.*)\\)\\s*$");
     String[] pieces = PApplet.match(matrixStr, "[,\\s]*(\\w+)\\((.*)\\)");
     if (pieces == null) {
@@ -1084,8 +1124,11 @@ public class PShapeSVG extends PShape {
     return null;
   }
 
-
-  protected void parseColors(XML properties) {
+    /**
+     *
+     * @param properties
+     */
+    protected void parseColors(XML properties) {
     if (properties.hasAttribute("opacity")) {
       String opacityText = properties.getString("opacity");
       setOpacity(opacityText);
@@ -1273,6 +1316,7 @@ public class PShapeSVG extends PShape {
   /**
    * Parses the "color" datatype only, and prints an error if it is not of this form.
    * http://www.w3.org/TR/SVG/types.html#DataTypeColor
+     * @param colorText
    * @return 0xRRGGBB (no alpha). Zero on error.
    */
   static protected int parseSimpleColor(String colorText) {
@@ -1344,6 +1388,13 @@ public class PShapeSVG extends PShape {
   }
   */
 
+    /**
+     *
+     * @param what
+     * @return
+     */
+
+
   static protected int parseRGB(String what) {
     int leftParen = what.indexOf('(') + 1;
     int rightParen = what.indexOf(')');
@@ -1367,6 +1418,12 @@ public class PShapeSVG extends PShape {
 
 
   //static protected Map<String, String> parseStyleAttributes(String style) {
+
+    /**
+     *
+     * @param style
+     * @return
+     */
   static protected StringDict parseStyleAttributes(String style) {
     //Map<String, String> table = new HashMap<String, String>();
     StringDict table = new StringDict();
@@ -1410,9 +1467,11 @@ public class PShapeSVG extends PShape {
    * <LI>"1cm" equals "35.43307px" (and therefore 35.43307 user units)
    * <LI>"1in" equals "90px" (and therefore 90 user units)
    * </UL>
+     * @param text
    * @param relativeTo (float) Used for %. When relative to viewbox, should
    *    be svgWidth for horizontal dimentions, svgHeight for vertical, and
    *    svgXYSize for anything else.
+     * @return 
    */
   static protected float parseUnitSize(String text, float relativeTo) {
     int len = text.length() - 2;
@@ -1436,8 +1495,12 @@ public class PShapeSVG extends PShape {
     }
   }
 
-
-  static protected float parseFloatOrPercent(String text) {
+    /**
+     *
+     * @param text
+     * @return
+     */
+    static protected float parseFloatOrPercent(String text) {
     text = text.trim();
     if (text.endsWith("%")) {
       return Float.parseFloat(text.substring(0, text.length() - 1)) / 100.0f;
@@ -1449,15 +1512,35 @@ public class PShapeSVG extends PShape {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /**
+     *
+     */
+
 
   static public class Gradient extends PShapeSVG {
     AffineTransform transform;
 
-    public float[] offset;
-    public int[] color;
-    public int count;
+      /**
+       *
+       */
+      public float[] offset;
 
-    public Gradient(PShapeSVG parent, XML properties) {
+      /**
+       *
+       */
+      public int[] color;
+
+      /**
+       *
+       */
+      public int count;
+
+      /**
+       *
+       * @param parent
+       * @param properties
+       */
+      public Gradient(PShapeSVG parent, XML properties) {
       super(parent, properties, true);
 
       XML elements[] = properties.getChildren();
@@ -1497,11 +1580,37 @@ public class PShapeSVG extends PShape {
     }
   }
 
+    /**
+     *
+     */
+    public class LinearGradient extends Gradient {
 
-  public class LinearGradient extends Gradient {
-    public float x1, y1, x2, y2;
+      /**
+       *
+       */
+      public float x1,
 
-    public LinearGradient(PShapeSVG parent, XML properties) {
+      /**
+       *
+       */
+      y1,
+
+      /**
+       *
+       */
+      x2,
+
+      /**
+       *
+       */
+      y2;
+
+      /**
+       *
+       * @param parent
+       * @param properties
+       */
+      public LinearGradient(PShapeSVG parent, XML properties) {
       super(parent, properties);
 
       this.x1 = getFloatWithUnit(properties, "x1", svgWidth);
@@ -1527,11 +1636,32 @@ public class PShapeSVG extends PShape {
     }
   }
 
+    /**
+     *
+     */
+    public class RadialGradient extends Gradient {
 
-  public class RadialGradient extends Gradient {
-    public float cx, cy, r;
+      /**
+       *
+       */
+      public float cx,
 
-    public RadialGradient(PShapeSVG parent, XML properties) {
+      /**
+       *
+       */
+      cy,
+
+      /**
+       *
+       */
+      r;
+
+      /**
+       *
+       * @param parent
+       * @param properties
+       */
+      public RadialGradient(PShapeSVG parent, XML properties) {
       super(parent, properties);
 
       this.cx = getFloatWithUnit(properties, "cx", svgWidth);
@@ -1558,21 +1688,51 @@ public class PShapeSVG extends PShape {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /**
+     *
+     */
+
 
   public static class Font extends PShapeSVG {
-    public FontFace face;
 
-    public Map<String, FontGlyph> namedGlyphs;
-    public Map<Character, FontGlyph> unicodeGlyphs;
+      /**
+       *
+       */
+      public FontFace face;
 
-    public int glyphCount;
-    public FontGlyph[] glyphs;
-    public FontGlyph missingGlyph;
+      /**
+       *
+       */
+      public Map<String, FontGlyph> namedGlyphs;
+
+      /**
+       *
+       */
+      public Map<Character, FontGlyph> unicodeGlyphs;
+
+      /**
+       *
+       */
+      public int glyphCount;
+
+      /**
+       *
+       */
+      public FontGlyph[] glyphs;
+
+      /**
+       *
+       */
+      public FontGlyph missingGlyph;
 
     int horizAdvX;
 
-
-    public Font(PShapeSVG parent, XML properties) {
+      /**
+       *
+       * @param parent
+       * @param properties
+       */
+      public Font(PShapeSVG parent, XML properties) {
       super(parent, properties, false);
 //      handle(parent, properties);
 
@@ -1613,13 +1773,22 @@ public class PShapeSVG extends PShape {
       }
     }
 
-
-    protected void drawShape() {
+      /**
+       *
+       */
+      protected void drawShape() {
       // does nothing for fonts
     }
 
-
-    public void drawString(PGraphics g, String str, float x, float y, float size) {
+      /**
+       *
+       * @param g
+       * @param str
+       * @param x
+       * @param y
+       * @param size
+       */
+      public void drawString(PGraphics g, String str, float x, float y, float size) {
       // 1) scale by the 1.0/unitsPerEm
       // 2) scale up by a font size
       g.pushMatrix();
@@ -1643,8 +1812,15 @@ public class PShapeSVG extends PShape {
       g.popMatrix();
     }
 
-
-    public void drawChar(PGraphics g, char c, float x, float y, float size) {
+      /**
+       *
+       * @param g
+       * @param c
+       * @param x
+       * @param y
+       * @param size
+       */
+      public void drawChar(PGraphics g, char c, float x, float y, float size) {
       g.pushMatrix();
       float s =  size / face.unitsPerEm;
       g.translate(x, y);
@@ -1654,8 +1830,13 @@ public class PShapeSVG extends PShape {
       g.popMatrix();
     }
 
-
-    public float textWidth(String str, float size) {
+      /**
+       *
+       * @param str
+       * @param size
+       * @return
+       */
+      public float textWidth(String str, float size) {
       float w = 0;
       char[] c = str.toCharArray();
       for (int i = 0; i < c.length; i++) {
@@ -1709,13 +1890,27 @@ public class PShapeSVG extends PShape {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /**
+     *
+     */
+
 
   public static class FontGlyph extends PShapeSVG {  // extends Path
+
+      /**
+       *
+       */
     public String name;
     char unicode;
     int horizAdvX;
 
-    public FontGlyph(PShapeSVG parent, XML properties, Font font) {
+      /**
+       *
+       * @param parent
+       * @param properties
+       * @param font
+       */
+      public FontGlyph(PShapeSVG parent, XML properties, Font font) {
       super(parent, properties, true);
       super.parsePath();  // ??
 
@@ -1738,8 +1933,11 @@ public class PShapeSVG extends PShape {
       }
     }
 
-
-    protected boolean isLegit() {  // TODO need a better way to handle this...
+      /**
+       *
+       * @return
+       */
+      protected boolean isLegit() {  // TODO need a better way to handle this...
       return vertexCount != 0;
     }
   }
@@ -1758,6 +1956,8 @@ public class PShapeSVG extends PShape {
    * // This code grabs "Layer 3" and the shapes beneath it.
    * PShape layer3 = svg.getChild("Layer 3");
    * </PRE>
+     * @param name
+     * @return 
    */
   @Override
   public PShape getChild(String name) {

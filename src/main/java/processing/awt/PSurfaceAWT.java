@@ -57,7 +57,10 @@ import processing.core.PSurfaceNone;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
-
+/**
+ *
+ * @author tux
+ */
 public class PSurfaceAWT extends PSurfaceNone {
   GraphicsDevice displayDevice;
 
@@ -92,8 +95,11 @@ public class PSurfaceAWT extends PSurfaceNone {
 
   int windowScaleFactor;
 
-
-  public PSurfaceAWT(PGraphics graphics) {
+    /**
+     *
+     * @param graphics
+     */
+    public PSurfaceAWT(PGraphics graphics) {
     //this.graphics = graphics;
     super(graphics);
 
@@ -183,6 +189,10 @@ public class PSurfaceAWT extends PSurfaceNone {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /**
+     *
+     */
+
 
   public class SmoothCanvas extends Canvas {
     private Dimension oldSize = new Dimension(0, 0);
@@ -190,31 +200,47 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
     // Turns out getParent() returns a JPanel on a JFrame. Yech.
+
+      /**
+       *
+       * @return
+       */
     public Frame getFrame() {
       return frame;
     }
 
-
-    @Override
+      /**
+       *
+       * @return
+       */
+      @Override
     public Dimension getPreferredSize() {
       return new Dimension(sketchWidth, sketchHeight);
     }
 
-
-    @Override
+      /**
+       *
+       * @return
+       */
+      @Override
     public Dimension getMinimumSize() {
       return getPreferredSize();
     }
 
-
-    @Override
+      /**
+       *
+       * @return
+       */
+      @Override
     public Dimension getMaximumSize() {
       //return resizable ? super.getMaximumSize() : getPreferredSize();
       return frame.isResizable() ? super.getMaximumSize() : getPreferredSize();
     }
 
-
-    @Override
+      /**
+       *
+       */
+      @Override
     public void validate() {
       super.validate();
       newSize.width = getWidth();
@@ -235,15 +261,21 @@ public class PSurfaceAWT extends PSurfaceNone {
       }
     }
 
-
-    @Override
+      /**
+       *
+       * @param g
+       */
+      @Override
     public void update(Graphics g) {
 //      System.out.println("updating");
       paint(g);
     }
 
-
-    @Override
+      /**
+       *
+       * @param screen
+       */
+      @Override
     public void paint(Graphics screen) {
 //      System.out.println("painting");
 //      if (useStrategy) {
@@ -280,8 +312,10 @@ public class PSurfaceAWT extends PSurfaceNone {
     }
     */
 
-
-  synchronized protected void render() {
+    /**
+     *
+     */
+    synchronized protected void render() {
     if (canvas.isDisplayable() &&
         graphics.image != null) {
       if (canvas.getBufferStrategy() == null) {
@@ -357,6 +391,11 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
   // what needs to happen here?
+
+    /**
+     *
+     * @param sketch
+     */
   @Override
   public void initOffscreen(PApplet sketch) {
     this.sketch = sketch;
@@ -384,8 +423,11 @@ public class PSurfaceAWT extends PSurfaceNone {
   }
   */
 
-
-  @Override
+    /**
+     *
+     * @param sketch
+     */
+    @Override
   public void initFrame(final PApplet sketch) {/*, int backgroundColor,
                         int deviceIndex, boolean fullScreen, boolean spanDisplays) {*/
     this.sketch = sketch;
@@ -558,7 +600,8 @@ public class PSurfaceAWT extends PSurfaceNone {
 //  }
 
 
-  /** Set the window (and dock, or whatever necessary) title. */
+  /** Set the window (and dock, or whatever necessary) title.
+     * @param title */
   @Override
   public void setTitle(String title) {
     frame.setTitle(title);
@@ -573,7 +616,8 @@ public class PSurfaceAWT extends PSurfaceNone {
   }
 
 
-  /** Set true if we want to resize things (default is not resizable) */
+  /** Set true if we want to resize things (default is not resizable)
+     * @param resizable */
   @Override
   public void setResizable(boolean resizable) {
     //this.resizable = resizable;  // really only used for canvas
@@ -583,8 +627,11 @@ public class PSurfaceAWT extends PSurfaceNone {
     }
   }
 
-
-  @Override
+    /**
+     *
+     * @param image
+     */
+    @Override
   public void setIcon(PImage image) {
     Image awtImage = (Image) image.getNative();
     frame.setIconImage(awtImage);
@@ -611,8 +658,12 @@ public class PSurfaceAWT extends PSurfaceNone {
     frame.setAlwaysOnTop(always);
   }
 
-
-  @Override
+    /**
+     *
+     * @param x
+     * @param y
+     */
+    @Override
   public void setLocation(int x, int y) {
     frame.setLocation(x, y);
   }
@@ -620,7 +671,11 @@ public class PSurfaceAWT extends PSurfaceNone {
 
   List<Image> iconImages;
 
-  protected void setProcessingIcon(Frame frame) {
+    /**
+     *
+     * @param frame
+     */
+    protected void setProcessingIcon(Frame frame) {
     // On OS X, this only affects what shows up in the dock when minimized.
     // So replacing it is actually a step backwards. Brilliant.
     // if (PApplet.platform != PConstants.MACOSX) {
@@ -712,6 +767,11 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
   //public void placeFullScreen(boolean hideStop) {
+
+    /**
+     *
+     * @param stopColor
+     */
   @Override
   public void placePresent(int stopColor) {
     setFullFrame();
@@ -859,8 +919,12 @@ public class PSurfaceAWT extends PSurfaceNone {
     //frame.setVisible(true);  // re-add native resources
   }
 
-
-  @Override
+    /**
+     *
+     * @param location
+     * @param editorLocation
+     */
+    @Override
   public void placeWindow(int[] location, int[] editorLocation) {
     //Dimension window = setFrameSize(sketchWidth, sketchHeight);
     Dimension window = setFrameSize(); //sketchWidth, sketchHeight);
@@ -943,6 +1007,12 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
   // needs to resize the frame, which will resize the canvas, and so on...
+
+    /**
+     *
+     * @param wide
+     * @param high
+     */
   @Override
   public void setSize(int wide, int high) {
     // When the surface is set to resizable via surface.setResizable(true),
@@ -1235,6 +1305,7 @@ public class PSurfaceAWT extends PSurfaceNone {
    * Figure out how to process a mouse event. When loop() has been
    * called, the events will be queued up until drawing is complete.
    * If noLoop() has been called, then events will happen immediately.
+     * @param nativeEvent
    */
   protected void nativeMouseEvent(java.awt.event.MouseEvent nativeEvent) {
     // the 'amount' is the number of button clicks for a click event,
@@ -1334,8 +1405,11 @@ public class PSurfaceAWT extends PSurfaceNone {
                                     peCount));
   }
 
-
-  protected void nativeKeyEvent(java.awt.event.KeyEvent event) {
+    /**
+     *
+     * @param event
+     */
+    protected void nativeKeyEvent(java.awt.event.KeyEvent event) {
     int peAction = 0;
     switch (event.getID()) {
     case java.awt.event.KeyEvent.KEY_PRESSED:
@@ -1367,6 +1441,10 @@ public class PSurfaceAWT extends PSurfaceNone {
 
 
   // listeners, for all my men!
+
+    /**
+     *
+     */
   protected void addListeners() {
 
     canvas.addMouseListener(new MouseListener() {
@@ -1480,8 +1558,11 @@ public class PSurfaceAWT extends PSurfaceNone {
   boolean cursorVisible = true;
   Cursor invisibleCursor;
 
-
-  @Override
+    /**
+     *
+     * @param kind
+     */
+    @Override
   public void setCursor(int kind) {
     // Swap the HAND cursor because MOVE doesn't seem to be available on OS X
     // https://github.com/processing/processing/issues/2358
@@ -1493,8 +1574,13 @@ public class PSurfaceAWT extends PSurfaceNone {
     this.cursorType = kind;
   }
 
-
-  @Override
+    /**
+     *
+     * @param img
+     * @param x
+     * @param y
+     */
+    @Override
   public void setCursor(PImage img, int x, int y) {
     // Don't set cursorType, instead use cursorType to save the last
     // regular cursor type used for when cursor() is called.
@@ -1514,8 +1600,10 @@ public class PSurfaceAWT extends PSurfaceNone {
     cursorVisible = true;
   }
 
-
-  @Override
+    /**
+     *
+     */
+    @Override
   public void showCursor() {
     // Maybe should always set here? Seems dangerous, since it's likely that
     // Java will set the cursor to something else on its own, and the sketch
@@ -1526,8 +1614,10 @@ public class PSurfaceAWT extends PSurfaceNone {
     }
   }
 
-
-  @Override
+    /**
+     *
+     */
+    @Override
   public void hideCursor() {
     // Because the OS may have shown the cursor on its own,
     // don't return if 'cursorVisible' is set to true. [rev 0216]
@@ -1548,8 +1638,11 @@ public class PSurfaceAWT extends PSurfaceNone {
     cursorVisible = false;
   }
 
-
-  @Override
+    /**
+     *
+     * @return
+     */
+    @Override
   public Thread createThread() {
     return new AnimationThread() {
       @Override

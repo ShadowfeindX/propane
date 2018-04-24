@@ -23,6 +23,10 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import static processing.core.PConstants.HALF_PI;
 
+/**
+ *
+ * @author tux
+ */
 public class SimpleVerticalSlider extends SimpleSlider {
     
     final int SPACING = 20;

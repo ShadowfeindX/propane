@@ -54,12 +54,14 @@ public abstract class LibraryProxy {
   /**
   * Extending classes can override this, gives access to, by reflection,
   * processing PApplet post loop (called after draw)
+     * @param e
   */
   public void keyEvent(KeyEvent e){}
 
   /**
   * Extending classes can override this, gives access to, by reflection,
   * processing PApplet post loop (called after draw)
+     * @param e
   */
   public void mouseEvent(MouseEvent e){}
 

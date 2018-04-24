@@ -44,7 +44,9 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
 
     abstract void drawGui();
 
-    
+    /**
+     *
+     */
     @Override
     public void draw() {
         applet.pushStyle();
@@ -115,6 +117,15 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
 
     abstract boolean mouseOver();
 
+    /**
+     *
+     * @param val
+     * @param begIn
+     * @param endIn
+     * @param beginOut
+     * @param endOut
+     * @return
+     */
     protected float map(float val, float begIn, float endIn, float beginOut, float endOut) {
         return (beginOut + (endOut - beginOut) * ((val - begIn) / (endIn - begIn)));
     }
@@ -145,7 +156,15 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
 
     abstract void checkKeyboard();
 
-
+    /**
+     *
+     * @param val
+     * @param begIn
+     * @param endIn
+     * @param beginOut
+     * @param endOut
+     * @return
+     */
     protected int constrainMap(double val, double begIn, double endIn, double beginOut, double endOut) {
         double max = Math.max(begIn, endIn);
         double min = Math.min(begIn, endIn);
@@ -167,7 +186,9 @@ public abstract class SimpleSlider implements Slider {//implements Slider {
         }
     }
 
-    
+    /**
+     *
+     */
     @Override
     public void dispose() {
         setActive(false);

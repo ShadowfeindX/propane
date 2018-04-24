@@ -28,7 +28,6 @@ import org.jruby.RubyObject;
 import org.jruby.RubySymbol;
 import org.jruby.anno.JRubyClass;
 import org.jruby.anno.JRubyMethod;
-import org.jruby.runtime.Arity;
 import org.jruby.runtime.Block;
 import org.jruby.runtime.ThreadContext;
 import org.jruby.runtime.builtin.IRubyObject;
@@ -56,10 +55,18 @@ public class Vec2 extends RubyObject {
         vec2Cls.defineAnnotatedMethods(Vec2.class);
     }
 
+    /**
+     *
+     * @return
+     */
     public double javax() {
         return jx;
     }
 
+    /**
+     *
+     * @return
+     */
     public double javay() {
         return jy;
     }

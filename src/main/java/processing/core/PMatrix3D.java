@@ -42,22 +42,106 @@ package processing.core;
  */
 public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
-  public float m00, m01, m02, m03;
-  public float m10, m11, m12, m13;
-  public float m20, m21, m22, m23;
-  public float m30, m31, m32, m33;
+    /**
+     *
+     */
+    public float m00,
+
+    /**
+     *
+     */
+    m01,
+
+    /**
+     *
+     */
+    m02,
+
+    /**
+     *
+     */
+    m03;
+
+    /**
+     *
+     */
+    public float m10,
+
+    /**
+     *
+     */
+    m11,
+
+    /**
+     *
+     */
+    m12,
+
+    /**
+     *
+     */
+    m13;
+
+    /**
+     *
+     */
+    public float m20,
+
+    /**
+     *
+     */
+    m21,
+
+    /**
+     *
+     */
+    m22, m23;
+
+    /**
+     *
+     */
+    public float m30,
+
+    /**
+     *
+     */
+    m31,
+
+    /**
+     *
+     */
+    m32,
+
+    /**
+     *
+     */
+    m33;
 
 
   // locally allocated version to avoid creating new memory
+
+    /**
+     *
+     */
   protected PMatrix3D inverseCopy;
 
-
-  public PMatrix3D() {
+    /**
+     *
+     */
+    public PMatrix3D() {
     reset();
   }
 
-
-  public PMatrix3D(float m00, float m01, float m02,
+    /**
+     *
+     * @param m00
+     * @param m01
+     * @param m02
+     * @param m10
+     * @param m11
+     * @param m12
+     */
+    public PMatrix3D(float m00, float m01, float m02,
                    float m10, float m11, float m12) {
     set(m00, m01, m02, 0,
         m10, m11, m12, 0,
@@ -65,8 +149,26 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
         0,   0,   0,   1);
   }
 
-
-  public PMatrix3D(float m00, float m01, float m02, float m03,
+    /**
+     *
+     * @param m00
+     * @param m01
+     * @param m02
+     * @param m03
+     * @param m10
+     * @param m11
+     * @param m12
+     * @param m13
+     * @param m20
+     * @param m21
+     * @param m22
+     * @param m23
+     * @param m30
+     * @param m31
+     * @param m32
+     * @param m33
+     */
+    public PMatrix3D(float m00, float m01, float m02, float m03,
                    float m10, float m11, float m12, float m13,
                    float m20, float m21, float m22, float m23,
                    float m30, float m31, float m32, float m33) {
@@ -76,8 +178,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
         m30, m31, m32, m33);
   }
 
-
-  public PMatrix3D(PMatrix matrix) {
+    /**
+     *
+     * @param matrix
+     */
+    public PMatrix3D(PMatrix matrix) {
     set(matrix);
   }
 
@@ -92,6 +197,7 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Returns a copy of this PMatrix.
+     * @return 
    */
   public PMatrix3D get() {
     PMatrix3D outgoing = new PMatrix3D();
@@ -103,6 +209,8 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Copies the matrix contents into a 16 entry float array.
    * If target is null (or not the correct size), a new array will be created.
+     * @param target
+     * @return 
    */
   public float[] get(float[] target) {
     if ((target == null) || (target.length != 16)) {
@@ -197,8 +305,12 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
     this.m30 = m30; this.m31 = m31; this.m32 = m32; this.m33 = m33;
   }
 
-
-  public void translate(float tx, float ty) {
+    /**
+     *
+     * @param tx
+     * @param ty
+     */
+    public void translate(float tx, float ty) {
     translate(tx, ty, 0);
   }
 
@@ -206,42 +318,65 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 //    invTranslate(tx, ty, 0);
 //  }
 
-
-  public void translate(float tx, float ty, float tz) {
+    /**
+     *
+     * @param tx
+     * @param ty
+     * @param tz
+     */
+    public void translate(float tx, float ty, float tz) {
     m03 += tx*m00 + ty*m01 + tz*m02;
     m13 += tx*m10 + ty*m11 + tz*m12;
     m23 += tx*m20 + ty*m21 + tz*m22;
     m33 += tx*m30 + ty*m31 + tz*m32;
   }
 
-
-  public void rotate(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void rotate(float angle) {
     rotateZ(angle);
   }
 
-
-  public void rotateX(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void rotateX(float angle) {
     float c = cos(angle);
     float s = sin(angle);
     apply(1, 0, 0, 0,  0, c, -s, 0,  0, s, c, 0,  0, 0, 0, 1);
   }
 
-
-  public void rotateY(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void rotateY(float angle) {
     float c = cos(angle);
     float s = sin(angle);
     apply(c, 0, s, 0,  0, 1, 0, 0,  -s, 0, c, 0,  0, 0, 0, 1);
   }
 
-
-  public void rotateZ(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void rotateZ(float angle) {
     float c = cos(angle);
     float s = sin(angle);
     apply(c, -s, 0, 0,  s, c, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1);
   }
 
-
-  public void rotate(float angle, float v0, float v1, float v2) {
+    /**
+     *
+     * @param angle
+     * @param v0
+     * @param v1
+     * @param v2
+     */
+    public void rotate(float angle, float v0, float v1, float v2) {
     float norm2 = v0 * v0 + v1 * v1 + v2 * v2;
     if (norm2 < PConstants.EPSILON) {
       // The vector is zero, cannot apply rotation.
@@ -266,20 +401,32 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
           0, 0, 0, 1);
   }
 
-
-  public void scale(float s) {
+    /**
+     *
+     * @param s
+     */
+    public void scale(float s) {
     //apply(s, 0, 0, 0,  0, s, 0, 0,  0, 0, s, 0,  0, 0, 0, 1);
     scale(s, s, s);
   }
 
-
-  public void scale(float sx, float sy) {
+    /**
+     *
+     * @param sx
+     * @param sy
+     */
+    public void scale(float sx, float sy) {
     //apply(sx, 0, 0, 0,  0, sy, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1);
     scale(sx, sy, 1);
   }
 
-
-  public void scale(float x, float y, float z) {
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void scale(float x, float y, float z) {
     //apply(x, 0, 0, 0,  0, y, 0, 0,  0, 0, z, 0,  0, 0, 0, 1);
     m00 *= x;  m01 *= y;  m02 *= z;
     m10 *= x;  m11 *= y;  m12 *= z;
@@ -287,8 +434,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
     m30 *= x;  m31 *= y;  m32 *= z;
   }
 
-
-  public void shearX(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void shearX(float angle) {
     float t = (float) Math.tan(angle);
     apply(1, t, 0, 0,
           0, 1, 0, 0,
@@ -296,8 +446,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
           0, 0, 0, 1);
   }
 
-
-  public void shearY(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    public void shearY(float angle) {
     float t = (float) Math.tan(angle);
     apply(1, 0, 0, 0,
           t, 1, 0, 0,
@@ -374,6 +527,7 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Apply the 3D equivalent of the 2D matrix supplied to the left of this one.
+     * @param left
    */
   public void preApply(PMatrix2D left) {
     preApply(left.m00, left.m01, 0, left.m02,
@@ -385,6 +539,7 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Apply another matrix to the left of this one.
+     * @param source
    */
   public void preApply(PMatrix source) {
     if (source instanceof PMatrix2D) {
@@ -397,6 +552,7 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Apply another matrix to the left of this one.
+     * @param left
    */
   public void preApply(PMatrix3D left) {
     preApply(left.m00, left.m01, left.m02, left.m03,
@@ -408,6 +564,12 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Apply the 3D equivalent of the 2D matrix supplied to the left of this one.
+     * @param n00
+     * @param n01
+     * @param n10
+     * @param n02
+     * @param n11
+     * @param n12
    */
   public void preApply(float n00, float n01, float n02,
                        float n10, float n11, float n12) {
@@ -420,6 +582,22 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   /**
    * Apply another matrix to the left of this one.
+     * @param n00
+     * @param n01
+     * @param n03
+     * @param n02
+     * @param n32
+     * @param n10
+     * @param n12
+     * @param n23
+     * @param n20
+     * @param n11
+     * @param n21
+     * @param n13
+     * @param n31
+     * @param n22
+     * @param n30
+     * @param n33
    */
   public void preApply(float n00, float n01, float n02, float n03,
                        float n10, float n11, float n12, float n13,
@@ -461,6 +639,9 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
    * The result will be stored in target if target is non-null, and target
    * will then be the matrix returned. This improves performance if you reuse
    * target, so it's recommended if you call this many times in draw().
+     * @param source
+     * @param target
+     * @return 
    */
   public PVector mult(PVector source, PVector target) {
     if (target == null) {
@@ -499,6 +680,9 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
    * null or not length 3 or 4, a new float array (length 3) will be returned.
    * Supplying and recycling a target array improves performance, so it's
    * recommended if you call this many times in draw.
+     * @param source
+     * @param target
+     * @return 
    */
   public float[] mult(float[] source, float[] target) {
     if (target == null || target.length < 3) {
@@ -529,6 +713,9 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the x-coordinate of the result of multiplying the point (x, y)
    * by this matrix.
+     * @param x
+     * @param y
+     * @return 
    */
   public float multX(float x, float y) {
     return m00*x + m01*y + m03;
@@ -538,6 +725,9 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the y-coordinate of the result of multiplying the point (x, y)
    * by this matrix.
+     * @param x
+     * @param y
+     * @return 
    */
   public float multY(float x, float y) {
     return m10*x + m11*y + m13;
@@ -547,6 +737,10 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the x-coordinate of the result of multiplying the point (x, y, z)
    * by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @return 
    */
   public float multX(float x, float y, float z) {
     return m00*x + m01*y + m02*z + m03;
@@ -556,6 +750,10 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the y-coordinate of the result of multiplying the point (x, y, z)
    * by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @return 
    */
   public float multY(float x, float y, float z) {
     return m10*x + m11*y + m12*z + m13;
@@ -565,6 +763,10 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the z-coordinate of the result of multiplying the point (x, y, z)
    * by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @return 
    */
   public float multZ(float x, float y, float z) {
     return m20*x + m21*y + m22*z + m23;
@@ -574,6 +776,10 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the fourth element of the result of multiplying the vector
    * (x, y, z) by this matrix. (Acts as if w = 1 was supplied.)
+     * @param x
+     * @param y
+     * @param z
+     * @return 
    */
   public float multW(float x, float y, float z) {
     return m30*x + m31*y + m32*z + m33;
@@ -583,6 +789,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the x-coordinate of the result of multiplying the vector
    * (x, y, z, w) by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return 
    */
   public float multX(float x, float y, float z, float w) {
     return m00*x + m01*y + m02*z + m03*w;
@@ -592,6 +803,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the y-coordinate of the result of multiplying the vector
    * (x, y, z, w) by this matrix.
+     * @param x
+     * @param w
+     * @param y
+     * @param z
+     * @return 
    */
   public float multY(float x, float y, float z, float w) {
     return m10*x + m11*y + m12*z + m13*w;
@@ -601,6 +817,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the z-coordinate of the result of multiplying the vector
    * (x, y, z, w) by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return 
    */
   public float multZ(float x, float y, float z, float w) {
     return m20*x + m21*y + m22*z + m23*w;
@@ -610,6 +831,11 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
   /**
    * Returns the w-coordinate of the result of multiplying the vector
    * (x, y, z, w) by this matrix.
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return 
    */
   public float multW(float x, float y, float z, float w) {
     return m30*x + m31*y + m32*z + m33*w;
@@ -738,6 +964,13 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
   // These functions should not be used, as they will be removed in the future.
 
+    /**
+     *
+     * @param tx
+     * @param ty
+     * @param tz
+     */
+
 
   protected void invTranslate(float tx, float ty, float tz) {
     preApply(1, 0, 0, -tx,
@@ -746,29 +979,44 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
              0, 0, 0, 1);
   }
 
-
-  protected void invRotateX(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    protected void invRotateX(float angle) {
     float c = cos(-angle);
     float s = sin(-angle);
     preApply(1, 0, 0, 0,  0, c, -s, 0,  0, s, c, 0,  0, 0, 0, 1);
   }
 
-
-  protected void invRotateY(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    protected void invRotateY(float angle) {
     float c = cos(-angle);
     float s = sin(-angle);
     preApply(c, 0, s, 0,  0, 1, 0, 0,  -s, 0, c, 0,  0, 0, 0, 1);
   }
 
-
-  protected void invRotateZ(float angle) {
+    /**
+     *
+     * @param angle
+     */
+    protected void invRotateZ(float angle) {
     float c = cos(-angle);
     float s = sin(-angle);
     preApply(c, -s, 0, 0,  s, c, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1);
   }
 
-
-  protected void invRotate(float angle, float v0, float v1, float v2) {
+    /**
+     *
+     * @param angle
+     * @param v0
+     * @param v1
+     * @param v2
+     */
+    protected void invRotate(float angle, float v0, float v1, float v2) {
     //TODO should make sure this vector is normalized
 
     float c = cos(-angle);
@@ -781,13 +1029,37 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
              0, 0, 0, 1);
   }
 
-
-  protected void invScale(float x, float y, float z) {
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
+    protected void invScale(float x, float y, float z) {
     preApply(1/x, 0, 0, 0,  0, 1/y, 0, 0,  0, 0, 1/z, 0,  0, 0, 0, 1);
   }
 
-
-  protected boolean invApply(float n00, float n01, float n02, float n03,
+    /**
+     *
+     * @param n00
+     * @param n01
+     * @param n02
+     * @param n03
+     * @param n10
+     * @param n11
+     * @param n12
+     * @param n13
+     * @param n20
+     * @param n21
+     * @param n22
+     * @param n23
+     * @param n30
+     * @param n31
+     * @param n32
+     * @param n33
+     * @return
+     */
+    protected boolean invApply(float n00, float n01, float n02, float n03,
                              float n10, float n11, float n12, float n13,
                              float n20, float n21, float n22, float n23,
                              float n30, float n31, float n32, float n33) {
@@ -807,6 +1079,10 @@ public final class PMatrix3D implements PMatrix /*, PConstants*/ {
 
 
   //////////////////////////////////////////////////////////////
+
+    /**
+     *
+     */
 
 
   public void print() {

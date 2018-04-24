@@ -22,6 +22,10 @@ package monkstone.slider;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ *
+ * @author tux
+ */
 public class SimpleHorizontalSlider extends SimpleSlider {
     
     final int SPACING = 20;
