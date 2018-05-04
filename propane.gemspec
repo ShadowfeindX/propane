@@ -10,12 +10,12 @@ Gem::Specification.new do |gem|
   gem.email         = ['mamba2928@yahoo.co.uk']
   gem.licenses     = %w(GPL-3.0 LGPL-2.0)
   gem.description  = <<-EOS
-  A batteries included version of processing in ruby, for MacOS and linux64.
+  A batteries included version of processing in ruby, for linux64 and possibly MacOS.
   EOS
-  gem.summary       = %q{ruby wrapper for processing-3.3.7 on MacOS and linux64 bit only for opengl}
+  gem.summary       = %q{ruby wrapper for processing-3.3.7 on linux64 and possibly MacOS}
   gem.homepage      = 'https://ruby-processing.github.io/propane/'
   gem.files         = `git ls-files`.split($/)
-  gem.files << 'lib/propane-2.8.0.jar'
+  gem.files << 'lib/propane-2.8.1.jar'
   gem.files << 'lib/gluegen-rt-2.3.2.jar'
   gem.files << 'lib/jogl-all-2.3.2.jar'
   gem.files << 'lib/gluegen-rt-2.3.2-natives-linux-amd64.jar'

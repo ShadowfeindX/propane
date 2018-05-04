@@ -10,7 +10,7 @@ A slim layer to communicate with Processing from JRuby, features a polyglot mave
 ## Requirements
 
 - jdk8+
-- jruby-9.1.16.0
+- jruby-9.1.17.0
 - mvn-3.5.0+ (_build only_)
 
 ## Building and testing
@@ -24,7 +24,7 @@ rake javadoc
 ## Installation
 ```bash
 jgem install propane --pre # from rubygems
-jgem install propane-2.8.0.pre-java.gem # local install
+jgem install propane-2.8.1.pre-java.gem # local install
 
 ```
 

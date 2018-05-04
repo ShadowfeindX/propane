@@ -1,3 +1,5 @@
+**v2.8.1** Incorporate virgin install changes as for version 2.7.2. Pretty soon I'm going to take a view on this branch, with or without MacOS users input!!! May be down to Linux and Raspberry-PI.... soon.
+
 **v2.8.0** Integrate processing-core, but think free (as in non-proprietary instead of Apple think different). If it doesn't then work on Mac could re-purpose for raspberryPI.
 
 **v2.7.1** Avoid calling protected method in control_panel (ready for jdk9)
