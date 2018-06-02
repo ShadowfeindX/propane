@@ -24,6 +24,7 @@ module Propane
       show_version if options[:version]
       create if options[:create]
       install(filename) if options[:install]
+      watch if options[:watch]
     end
 
     # Parse the command-line options. Keep it simple.
@@ -49,6 +50,11 @@ module Propane
         opts.on('-c', '--create', 'Create new sketch outline') do
           options[:create] = true
         end
+        
+        options[:watch] = false
+        opts.on('-w', '--watch', 'Run sketch in bare mode with live reload') do
+          options[:watch] = true
+        end
 
         # This displays the help screen, all programs are
         # assumed to have this option.
@@ -61,6 +67,11 @@ module Propane
       @filename = argc.shift
     end
 
+    def watch
+      require_relative 'watcher'
+      Watcher.new @filename, argc.shift&.to_i
+    end
+    
     def create
       require_relative 'creators/sketch_writer'
       SketchWriter.new(File.basename(filename, '.rb'), argc).write
