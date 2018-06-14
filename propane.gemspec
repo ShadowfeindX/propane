@@ -15,13 +15,11 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{ruby wrapper for processing-3.3.7 on windows and linux}
   gem.homepage      = 'https://ruby-processing.github.io/propane/'
   gem.files         = `git ls-files`.split($/)
-  gem.files << 'lib/propane-2.9.0.jar'
+  gem.files << 'lib/propane-3.0.0.jar'
   gem.files << 'lib/gluegen-rt.jar'
   gem.files << 'lib/jogl-all.jar'
-  gem.files << 'lib/gluegen-rt-natives-linux-amd64.jar'
   gem.files << 'lib/gluegen-rt-natives-windows-amd64.jar'
-  gem.files << 'lib/jogl-all-natives-linux-amd64.jar'
-  gem.files << 'lib/jogl-all-natives-macosx-amd64.jar'
+  gem.files << 'lib/jogl-all-natives-windows-amd64.jar'
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.add_development_dependency 'rake', '~> 12.3'
