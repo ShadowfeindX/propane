@@ -1,7 +1,7 @@
 # Propane
 To build custom core see [processing-core][processing-core]
 
-A slim layer to communicate with Processing from JRuby, features a polyglot maven build. We have created a configuration free version of ruby processing, for processing-3.3.7, where we include a modified processing core (`public runPropane()` to replace `protected runSketch()`, (_runSketch not currently usable with jruby and jdk 9_). These jars are small enough to include in a gem distribution, and hence we do not require configuration. This has created a scriptable version, ie files get run direct from jruby, but you could use jruby-complete if you used the propane script (avoids need to give the absolute data path for the data folder, but would also be needed for a watch mode). See guide to [building ruby-processing projects][building]. NB: this is a far from perfect solution and javafx sketches and possibly a feew others still fail to run with jdk9, but a least I get to diagnose those errors too.
+A slim layer to communicate with Processing from JRuby, features a polyglot maven build. We have created a configuration free version of ruby processing, for processing-3.3.7, where we include a modified processing core (`public runPropane()` to replace `protected runSketch()`, (_runSketch not currently usable with jruby and jdk 9_). These jars are small enough to include in a gem distribution, and hence we do not require configuration. This has created a scriptable version, ie files get run direct from jruby, but you could use jruby-complete if you used the propane script (avoids need to give the absolute data path for the data folder, but would also be needed for a watch mode). See guide to [building ruby-processing projects][building]. NB: this is a far from perfect solution and javafx sketches and possibly a few others still fail to run with jdk9, but a least I get to diagnose those errors too.
 
 adjust above for your OS/distro setup.
 
@@ -10,7 +10,7 @@ adjust above for your OS/distro setup.
 - `jdk8_u172`
 - `jruby-9.1.16.0`
 - `mvn-3.5.0+`
-- `apple.jar` (_build only_) see [vanilla-processing](https://github.com/processing/processing/blob/master/core/apple.jar)
+- `processing-3.3.7` jogl and gluegen jars (not ones from maven central, copy to lib folder) 
 
 ## Building and testing
 
@@ -23,7 +23,7 @@ rake javadoc
 ## Installation
 ```bash
 jgem install propane # from rubygems
-jgem install propane-2.9.0-java.gem # local install requires a custom processing-core
+jgem install propane-3.0.0-java.pre.gem # local install requires a custom processing-core
 ```
 
 ## Usage

@@ -6,14 +6,14 @@ class NativeFolder
 
   WIN_FORMAT = 'windows%d'.freeze
   LINUX_FORMAT = 'linux%d'.freeze
-  # WIN_PATTERNS = [
-  #   /bccwin/i,
-  #   /cygwin/i,
-  #   /djgpp/i,
-  #   /ming/i,
-  #   /mswin/i,
-  #   /wince/i
-  # ].freeze
+  WIN_PATTERNS = [
+    /bccwin/i,
+    /cygwin/i,
+    /djgpp/i,
+    /ming/i,
+    /mswin/i,
+    /wince/i
+  ].freeze
 
   def initialize
     @os = RbConfig::CONFIG['host_os'].downcase
@@ -21,13 +21,14 @@ class NativeFolder
   end
 
   def name
-    return 'macosx' if os =~ /darwin/ || os =~ /mac/
-    # return format(WIN_FORMAT, bit) if WIN_PATTERNS.include? os
+    return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? { |pat| pat =~ os }
     return format(LINUX_FORMAT, bit) if os =~ /linux/
+    'macosx'
   end
 
   def extension
     return '*.so' if os =~ /linux/
+    return '*.dll' if WIN_PATTERNS.any? { |pat| pat =~ os }
     '*.dylib' # MacOS
   end
 end

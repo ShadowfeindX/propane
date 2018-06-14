@@ -1,4 +1,4 @@
-**v2.9.0** No-one helped with think_open branch, that was trying to get ready for jdk9 (as compilable), so I'm abandoning 2.8.0 series, the 2.9.0 version will create an integrated jar and concentrate on compatibility, rather be future looking (but I'm not sure that think_different is any use or will work in future).
+**v3.0.0.pre** Attempt to get windows working (possibly abandoning MacOS no-one seems to care)
 
 **v2.7.2** Slight re-factor of control_panel, fix virgin install of libraries folder, add grafica library examples suggest upgrade to jruby-9.1.17.0
 
