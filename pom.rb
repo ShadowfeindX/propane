@@ -1,7 +1,7 @@
 require 'fileutils'
 project 'propane', 'https://github.com/monkstone/propane' do
   model_version '4.0.0'
-  id 'propane:propane:2.9.0'
+  id 'propane:propane:3.0.0'
   packaging 'jar'
   description 'An integrated processing-core (somewhat hacked), with additional java code for a jruby version of processing.'
 
