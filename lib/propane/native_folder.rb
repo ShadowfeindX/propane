@@ -26,7 +26,6 @@ class NativeFolder
   def name
     return format(WIN_FORMAT, bit) if WIN_PATTERNS.any? { |pat| pat =~ os }
     return format(LINUX_FORMAT, bit) if /linux/.match?(os)
-    end
     raise 'Unsupported Architecture'
   end
 
