@@ -18,6 +18,8 @@ Gem::Specification.new do |gem|
   gem.files << 'lib/propane-3.0.0.jar'
   gem.files << 'lib/gluegen-rt.jar'
   gem.files << 'lib/jogl-all.jar'
+  gem.files << 'lib/gluegen-rt-natives-linux-amd64.jar'
+  gem.files << 'lib/jogl-all-natives-linux-amd64.jar'
   gem.files << 'lib/gluegen-rt-natives-windows-amd64.jar'
   gem.files << 'lib/jogl-all-natives-windows-amd64.jar'
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
